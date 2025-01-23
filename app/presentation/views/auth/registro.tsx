@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Image, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View} from "react-native";
 import styles from "./StylesLogin";
 import {RoundedButton} from "../../components/RoundedButton";
 import {FormInputInlineWithIcon} from "../../components/FormInputInlineWithIcon";
@@ -7,6 +7,16 @@ import {useState} from "react";
 
 function RegistroScreen() {
     // const [nombre, setNombre]= useState<string>("")
+    const {
+        firstName,
+        lastName,
+        email,
+        password,
+        confirmPassword,
+        onChangeRegister,
+        register
+
+    }
 
     return (
         <View style={styles.container}>
@@ -71,7 +81,11 @@ function RegistroScreen() {
                 ></FormInputInlineWithIcon>
 
                 <View>
-                    <RoundedButton text={"Finalizar"} onPressFromInterface={() => {alert("Finalizado")}}></RoundedButton>
+                    <RoundedButton text={"Finalizar"} onPressFromInterface={
+                        () => {
+                            register()
+                            ToastAndroid.show("Boton presionado", ToastAndroid.LONG)
+                        }></RoundedButton>
                 </View>
 
             </View>

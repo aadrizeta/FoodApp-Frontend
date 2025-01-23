@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import {ApiDelivery} from "../../../data/sources/remote/api/ApiDelivery";
 
 
 /*
@@ -33,6 +34,51 @@ const LoginViewModel = () => {
         ...values,
         onChangeLogin,
     }
+
+    const RegisterViewModel = () => {
+        const [values, setValues]= useState({
+            firstName: "",
+            lastName: "",
+            email: "",
+            password: "",
+            repeatPassword: ""
+        })
+
+        const onChangeRegister = (property: string, value: any) => {
+            setValues({...values, [property]: value})
+        }
+
+        const register = await ApiDelivery.post()
+    }
 }
 
 export default {LoginViewModel};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -5,9 +5,11 @@ import {useNavigation} from "@react-navigation/native";
 import {RoundedButton} from "../../components/RoundedButton";
 import {FormInputInlineWithIcon} from "../../components/FormInputInlineWithIcon";
 import viewModel from "./ViewModel";
+import {NativeStackNavigationProp} from "@react-navigation/native-stack";
+import {RootStackParamList} from "../../../../App";
 
 export function LoginScreen(){
-    const navigation = useNavigation();
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     // const [email, setEmail] = useState<string>("");
     // const [password, setPassword] = useState<string>("");
