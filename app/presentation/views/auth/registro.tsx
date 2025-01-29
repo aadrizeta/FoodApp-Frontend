@@ -1,35 +1,34 @@
 import * as React from "react";
 import {Image, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View} from "react-native";
-import styles from "./StylesLogin";
+import styles from "./StylesRegistro";
 import {RoundedButton} from "../../components/RoundedButton";
 import {FormInputInlineWithIcon} from "../../components/FormInputInlineWithIcon";
-import {useState} from "react";
+import viewModel from "./ViewModel";
+import {useNavigation} from "@react-navigation/native";
+import stylesLogin from "./StylesLogin";
+import {RootStackParamList} from "../../../../App";
+import {NativeStackNavigationProp} from "@react-navigation/native-stack";
+import {useEffect} from "react";
 
 function RegistroScreen() {
-    // const [nombre, setNombre]= useState<string>("")
-    const {
-        firstName,
-        lastName,
-        email,
-        password,
-        confirmPassword,
-        onChangeRegister,
-        register
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    const {email, password, repeatPassword, firstName, lastName, phone, onChangeRegister, register, errorMessage, validateForm} = viewModel.RegisterViewModel();
 
-    }
+    useEffect(() => {
+        if (errorMessage != ""){
+            ToastAndroid.show(errorMessage, ToastAndroid.LONG);
+        }
+    }, [errorMessage])
 
     return (
         <View style={styles.container}>
 
-            <View style={stylesRegister.imageContainer}>
-                <Image
-                    style={stylesRegister.image}
-                    source={require("../../../../assets/logo.png")}
-                ></Image>
-                <Text style={styles.title}>Food App</Text>
+            <View style={styles.contenedorImagen}>
+                <Image style={styles.imagen} source={require("../../../../assets/logo.png")}/>
+                <Text style={stylesLogin.title}>Food App</Text>
             </View>
 
-            <View style={stylesRegister.formContainer}>
+            <View style={styles.formContainer}>
                 <Text style={styles.formTitle}>Formulario de registro</Text>
 
                 <FormInputInlineWithIcon
@@ -37,7 +36,7 @@ function RegistroScreen() {
                     placeholder={"Nombre"}
                     keyboardType="default"
                     secureTextEntry={false}
-                    onPressFormInterface={(text) => alert("")}
+                    onPressFormInterface={(text) => onChangeRegister('firstName', text)}
                 ></FormInputInlineWithIcon>
 
                 <FormInputInlineWithIcon
@@ -45,7 +44,7 @@ function RegistroScreen() {
                     placeholder={"Apellidos"}
                     keyboardType="default"
                     secureTextEntry={false}
-                    onPressFormInterface={() => alert("")}
+                    onPressFormInterface={(text) => onChangeRegister('lastName', text)}
                 ></FormInputInlineWithIcon>
 
                 <FormInputInlineWithIcon
@@ -53,7 +52,7 @@ function RegistroScreen() {
                     placeholder={"Correo electrónico"}
                     keyboardType="email-address"
                     secureTextEntry={false}
-                    onPressFormInterface={() => alert("")}
+                    onPressFormInterface={(text) => onChangeRegister('email', text)}
                 ></FormInputInlineWithIcon>
 
                 <FormInputInlineWithIcon
@@ -61,7 +60,7 @@ function RegistroScreen() {
                     placeholder={"Teléfono"}
                     keyboardType="numeric"
                     secureTextEntry={false}
-                    onPressFormInterface={() => alert("")}
+                    onPressFormInterface={(text) => onChangeRegister('phone', text)}
                 ></FormInputInlineWithIcon>
 
                 <FormInputInlineWithIcon
@@ -69,23 +68,15 @@ function RegistroScreen() {
                     placeholder={"Contraseña"}
                     keyboardType="default"
                     secureTextEntry={true}
-                    onPressFormInterface={() => alert("")}
-                ></FormInputInlineWithIcon>
-
-                <FormInputInlineWithIcon
-                    image={require("../../../../assets/confirm_password.png")}
-                    placeholder={"Repetir contraseña"}
-                    keyboardType="default"
-                    secureTextEntry={true}
-                    onPressFormInterface={() => alert("")}
+                    onPressFormInterface={(text) => onChangeRegister('password', text)}
                 ></FormInputInlineWithIcon>
 
                 <View>
                     <RoundedButton text={"Finalizar"} onPressFromInterface={
                         () => {
                             register()
-                            ToastAndroid.show("Boton presionado", ToastAndroid.LONG)
-                        }></RoundedButton>
+                            validateForm()
+                        }}></RoundedButton>
                 </View>
 
             </View>

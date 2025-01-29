@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Image, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Image, Text, TextInput, ToastAndroid, TouchableOpacity, View} from "react-native";
 import styles from "./StylesLogin";
 import {useNavigation} from "@react-navigation/native";
 import {RoundedButton} from "../../components/RoundedButton";
@@ -14,7 +14,7 @@ export function LoginScreen(){
     // const [email, setEmail] = useState<string>("");
     // const [password, setPassword] = useState<string>("");
 
-    const {email, password, onChangeLogin} = viewModel.LoginViewModel();
+    const {email, password, onChangeLogin, login} = viewModel.LoginViewModel();
 
     return (
         <View style={styles.container}>
@@ -47,7 +47,10 @@ export function LoginScreen(){
                 ></FormInputInlineWithIcon>
 
                 <View>
-                    <RoundedButton text={"Entrar"} onPressFromInterface={() => {alert("Usuario: " + email + "; contraseña: " + password)}}></RoundedButton>
+                    <RoundedButton onPressFromInterface={() => {
+                        login();
+                        ToastAndroid.show("Login Exitoso", ToastAndroid.SHORT);
+                    }} text={"Entrar"}/>
                 </View>
 
                 <View style={{marginTop: 30}}>
