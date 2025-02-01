@@ -3,4 +3,5 @@ import {ApiDeliveryResponse} from "../../data/sources/remote/models/ResponseApiD
 
 export interface AuthRepository {
     register: (user: UserInterface) => Promise<ApiDeliveryResponse>;
+    login: (user: UserInterface) => Promise<ApiDeliveryResponse>;
 }

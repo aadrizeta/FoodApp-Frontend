@@ -5,7 +5,11 @@ export interface UserInterface {
     email: string;
     password: string;
     phone: string;
-    repeatPassword: string;
+    token?: string;
 }
 
 export type UserLoginInterface = Pick<UserInterface, "email" | "password">;
+
+export interface UserLogin extends UserInterface{
+    token: string;
+}

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Image, Text, TextInput, ToastAndroid, TouchableOpacity, View} from "react-native";
 import styles from "./StylesLogin";
 import {useNavigation} from "@react-navigation/native";
@@ -14,7 +14,14 @@ export function LoginScreen(){
     // const [email, setEmail] = useState<string>("");
     // const [password, setPassword] = useState<string>("");
 
-    const {email, password, onChangeLogin, login} = viewModel.LoginViewModel();
+    const {email, password, onChangeLogin, login, errorMessage} = viewModel.LoginViewModel();
+    useEffect(()=>{
+        if(errorMessage != "")
+            ToastAndroid.show(errorMessage,ToastAndroid.LONG)
+
+    },
+        [errorMessage]
+    )
 
     return (
         <View style={styles.container}>

@@ -1,27 +1,58 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {ApiDelivery} from "../../../data/sources/remote/api/ApiDelivery";
 import {RegisterAuthUseCase} from "../../../domain/useCases/auth/RegisterAuth";
 import {LoginAuthUseCase} from "../../../domain/useCases/auth/LoginAuth";
+import {UserLogin} from "../../../domain/entities/User";
+import {SaveUserUseCase} from "../../../domain/useCases/UserLocal/SaveUser";
+import {GetUserUseCase} from "../../../domain/useCases/UserLocal/GetUser";
 
 const LoginViewModel = () => {
+    const [errorMessage, setErrorMessage]= useState<string>("");
     const [values, setValues] = useState({
         email: "",
         password: "",
     })
+    useEffect(()=>{
+        getUserSession()
+    })
+
+    const getUserSession = async () => {
+        const getUser = await GetUserUseCase();
+        console.log("Sesion del usuario: " + JSON.stringify(getUser));
+    }
 
     const onChangeLogin = (property: string, value: any) => {
         setValues({...values, [property]: value})
     }
 
     const login = async () => {
-        const response = await LoginAuthUseCase(values)
-        console.log("Result: " + JSON.stringify(response))
+        if (validateForm()){
+            const response = await LoginAuthUseCase(values)
+            if (!response.success){
+                setErrorMessage(response.message)
+            }
+            else {
+                await SaveUserUseCase(response.data as UserLogin)
+            }
+        }
+    }
+    const validateForm = () => {
+        if (values.email === "") {
+            setErrorMessage("Correo electrónico obligatorio")
+            return false;
+        }
+        if (values.password === "") {
+            setErrorMessage("Contraseña obligatoria")
+            return false;
+        }
+        return true;
     }
 
     return {
         ...values,
         onChangeLogin,
-        login
+        login,
+        errorMessage,
     }
 }
 
@@ -33,7 +64,6 @@ const RegisterViewModel = () => {
         email:"",
         password: "",
         phone: "",
-        repeatPassword: ""
     })
     const onChangeRegister = (property: string, value: any) => {
         setValues({...values, [property]: value})
@@ -44,7 +74,6 @@ const RegisterViewModel = () => {
             console.log("RESULT: " + JSON.stringify(response))
         }
     }
-
     const validateForm = () => {
         if (values.firstName === "") {
             setErrorMessage("Nombre obligatorio")
@@ -62,12 +91,8 @@ const RegisterViewModel = () => {
             setErrorMessage("Contraseña obligatoria")
             return false;
         }
-        if (values.repeatPassword === "") {
-            setErrorMessage("Confirmar contraseña obligatoria")
-            return false;
-        }
-        if (values.password !== values.repeatPassword){
-            setErrorMessage("Contraseñas no coinciden")
+        if (values.phone === ""){
+            setErrorMessage("telefono obligatorio")
             return false;
         }
         return true;
