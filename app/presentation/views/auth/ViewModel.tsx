@@ -2,9 +2,10 @@ import React, {useEffect, useState} from "react";
 import {ApiDelivery} from "../../../data/sources/remote/api/ApiDelivery";
 import {RegisterAuthUseCase} from "../../../domain/useCases/auth/RegisterAuth";
 import {LoginAuthUseCase} from "../../../domain/useCases/auth/LoginAuth";
-import {UserLogin} from "../../../domain/entities/User";
+import {UserLogin, UserLoginInterface} from "../../../domain/entities/User";
 import {SaveUserUseCase} from "../../../domain/useCases/UserLocal/SaveUser";
 import {GetUserUseCase} from "../../../domain/useCases/UserLocal/GetUser";
+import {UseUserLocalStorage} from "../../hooks/UseUserLocalStorage";
 
 const LoginViewModel = () => {
     const [errorMessage, setErrorMessage]= useState<string>("");
@@ -12,14 +13,7 @@ const LoginViewModel = () => {
         email: "",
         password: "",
     })
-    useEffect(()=>{
-        getUserSession()
-    })
-
-    const getUserSession = async () => {
-        const getUser = await GetUserUseCase();
-        console.log("Sesion del usuario: " + JSON.stringify(getUser));
-    }
+    const {user, getUserSession} = UseUserLocalStorage()
 
     const onChangeLogin = (property: string, value: any) => {
         setValues({...values, [property]: value})
@@ -27,7 +21,7 @@ const LoginViewModel = () => {
 
     const login = async () => {
         if (validateForm()){
-            const response = await LoginAuthUseCase(values)
+            const response = await LoginAuthUseCase(values as UserLoginInterface)
             if (!response.success){
                 setErrorMessage(response.message)
             }
@@ -53,6 +47,7 @@ const LoginViewModel = () => {
         onChangeLogin,
         login,
         errorMessage,
+        user
     }
 }
 

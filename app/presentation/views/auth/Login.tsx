@@ -14,7 +14,7 @@ export function LoginScreen(){
     // const [email, setEmail] = useState<string>("");
     // const [password, setPassword] = useState<string>("");
 
-    const {email, password, onChangeLogin, login, errorMessage} = viewModel.LoginViewModel();
+    const {email, password, onChangeLogin, login, errorMessage, user} = viewModel.LoginViewModel();
     useEffect(()=>{
         if(errorMessage != "")
             ToastAndroid.show(errorMessage,ToastAndroid.LONG)
@@ -22,6 +22,11 @@ export function LoginScreen(){
     },
         [errorMessage]
     )
+    useEffect(() => {
+        if (user && user?.token) {
+            navigation.replace("ProfileInfoScreen")
+        }
+    }, [user]);
 
     return (
         <View style={styles.container}>

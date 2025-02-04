@@ -12,7 +12,7 @@ import {useEffect} from "react";
 
 function RegistroScreen() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-    const {email, password, repeatPassword, firstName, lastName, phone, onChangeRegister, register, errorMessage, validateForm} = viewModel.RegisterViewModel();
+    const {email, password, firstName, lastName, phone, onChangeRegister, register, errorMessage, validateForm} = viewModel.RegisterViewModel();
 
     useEffect(() => {
         if (errorMessage != ""){
