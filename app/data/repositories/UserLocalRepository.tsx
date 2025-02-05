@@ -13,4 +13,8 @@ export class UserLocalRepositoryImpl implements UserLocalRepository {
         const data = await getItem("foof_app_usuario");
         return JSON.parse(data as any) as UserLogin;
     }
+    async deleteItem(): Promise<void>{
+        const {deleteItem} = LocalStorage();
+        deleteItem("foof_app_usuario");
+    }
 }

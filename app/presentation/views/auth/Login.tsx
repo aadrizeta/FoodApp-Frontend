@@ -7,9 +7,9 @@ import {FormInputInlineWithIcon} from "../../components/FormInputInlineWithIcon"
 import viewModel from "./ViewModel";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../../../../App";
+import {PropsStackNavigation} from "../../Interfaces/StackNavigation";
 
-export function LoginScreen(){
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+export function LoginScreen({navigation, route}: PropsStackNavigation){
 
     // const [email, setEmail] = useState<string>("");
     // const [password, setPassword] = useState<string>("");

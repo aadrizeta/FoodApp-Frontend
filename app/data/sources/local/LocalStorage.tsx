@@ -15,8 +15,16 @@ export const LocalStorage = () => {
             console.log("Error retrieving data from local storage: " + error);
         }
     }
+    const deleteItem = async (key: string) => {
+        try {
+            return await AsyncStorage.removeItem(key)
+        } catch (error) {
+            console.log("Error deleting data from local storage: " + error);
+        }
+    }
     return{
         save,
         getItem,
+        deleteItem,
     }
 }

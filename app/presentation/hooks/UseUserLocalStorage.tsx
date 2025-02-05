@@ -7,6 +7,7 @@ export const UseUserLocalStorage = () => {
     const [user, setUser] = useState<UserLogin>();
 
     useEffect(() => {
+        getUserSession()
 
     }, []);
 
@@ -15,7 +16,8 @@ export const UseUserLocalStorage = () => {
         setUser(user);
     }
 
-    return {user,
+    return {
+        user,
         getUserSession,
     }
 }
