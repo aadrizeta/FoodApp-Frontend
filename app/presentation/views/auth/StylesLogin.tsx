@@ -1,5 +1,6 @@
 import {StyleSheet} from "react-native";
 import {AppColors} from "../../theme/AppTheme";
+import {AppFonts} from "../../theme/AppTheme";
 
 
 const styles = StyleSheet.create({
@@ -13,7 +14,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: "6%",
         fontSize: 20,
-        fontWeight: 'bold',
+        fontFamily: AppFonts.light
     },
     imageContainer: {
         alignSelf: 'center',

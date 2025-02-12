@@ -24,7 +24,9 @@ export function LoginScreen({navigation, route}: PropsStackNavigation){
     )
     useEffect(() => {
         if (user && user?.token) {
-            navigation.replace("ProfileInfoScreen")
+            if (user.roles.length>1){
+
+            }
         }
     }, [user]);
 

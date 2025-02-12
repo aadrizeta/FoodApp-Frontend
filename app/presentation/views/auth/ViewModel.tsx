@@ -27,6 +27,7 @@ const LoginViewModel = () => {
             }
             else {
                 await SaveUserUseCase(response.data as UserLogin)
+                getUserSession()
             }
         }
     }

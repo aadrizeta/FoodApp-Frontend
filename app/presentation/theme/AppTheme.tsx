@@ -6,3 +6,11 @@ export const AppColors = {
     background: "#EEEEEE",
     dark: "#2A2A2A",
 }
+
+export const AppFonts = {
+    light: "Montserrat-Light",
+    bold: "Montserrat-Bold",
+    regular: "Montserrat-Regular",
+    extraBold: "Montserrat-ExtraBold",
+    medium: "Montserrat-Medium",
+}
